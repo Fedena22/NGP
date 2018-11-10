@@ -9,5 +9,8 @@ func control(delta):
 
 func _physics_process(delta):
 	control(delta)
-	move_and_slide(velocity)
-	
+	move_and_collide(velocity * delta)
+
+	var kb2d = self.move_and_collide(velocity * delta)
+	if (kb2d):
+    print("collided with" + str(kb2d.collider_id))
