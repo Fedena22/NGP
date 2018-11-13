@@ -1,13 +1,43 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
-[ext_resource path="res://map/Map.gd" type="Script" id=1]
-[ext_resource path="res://tilecreator/road.tres" type="TileSet" id=2]
-[ext_resource path="res://cars/Player.tscn" type="PackedScene" id=3]
+[ext_resource path="res://assets/glacial_mountains_lightened.png" type="Texture" id=1]
+[ext_resource path="res://tilecreator/ground2.tres" type="TileSet" id=2]
+[ext_resource path="res://planes/Player.tscn" type="PackedScene" id=3]
 
-[node name="Map" type="Node2D"]
-script = ExtResource( 1 )
+[sub_resource type="RectangleShape2D" id=1]
 
-[node name="Ground" type="TileMap" parent="."]
+custom_solver_bias = 0.0
+extents = Vector2( 1011.04, 10 )
+
+[node name="Map" type="Node"]
+
+[node name="ParallaxBackground" type="ParallaxBackground" parent="."]
+layer = -1
+offset = Vector2( 0, 0 )
+rotation = 0.0
+scale = Vector2( 1, 1 )
+transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+scroll_offset = Vector2( 0, 0 )
+scroll_base_offset = Vector2( 0, 0 )
+scroll_base_scale = Vector2( 1, 1 )
+scroll_limit_begin = Vector2( 0, 0 )
+scroll_limit_end = Vector2( 0, 0 )
+scroll_ignore_camera_zoom = false
+
+[node name="ParallaxLayer" type="ParallaxLayer" parent="ParallaxBackground"]
+position = Vector2( 0, -2.65002 )
+motion_scale = Vector2( 0.5, 0.5 )
+motion_offset = Vector2( 0, 0 )
+motion_mirroring = Vector2( 0, 0 )
+
+[node name="Back" type="Sprite" parent="ParallaxBackground/ParallaxLayer"]
+position = Vector2( 880.151, 323.066 )
+scale = Vector2( 4.25272, 3.4108 )
+texture = ExtResource( 1 )
+region_enabled = true
+region_rect = Rect2( 0, 0, 750, 232 )
+
+[node name="TileMap" type="TileMap" parent="."]
 mode = 0
 tile_set = ExtResource( 2 )
 cell_size = Vector2( 64, 64 )
@@ -17,17 +47,31 @@ cell_half_offset = 2
 cell_tile_origin = 0
 cell_y_sort = false
 cell_clip_uv = false
-collision_use_kinematic = false
+collision_use_kinematic = true
 collision_friction = 1.0
 collision_bounce = 0.0
-collision_layer = 2
-collision_mask = 2
+collision_layer = 1
+collision_mask = 1
 occluder_light_mask = 1
 format = 1
-tile_data = PoolIntArray( 0, 6, 0, 1, 6, 0, 2, 6, 0, 65536, 6, 0, 65537, 6, 0, 65538, 6, 0, 65539, 0, 0, 65540, 4, 0, 65541, 4, 0, 65542, 4, 0, 65543, 7, 0, 65544, 7, 0, 131072, 6, 0, 131073, 6, 0, 131074, 6, 0, 131075, 5, 0, 131076, 6, 0, 131077, 6, 0, 131078, 6, 0, 131079, 6, 0, 131080, 7, 0, 196608, 6, 0, 196609, 6, 0, 196610, 6, 0, 196611, 5, 0, 196612, 6, 0, 196613, 6, 0, 196614, 6, 0, 196615, 6, 0, 196616, 7, 0, 262144, 6, 0, 262145, 6, 0, 262146, 6, 0, 262147, 5, 0, 262148, 6, 0, 262149, 6, 0, 262150, 6, 0, 262151, 6, 0, 262152, 7, 0, 327680, 6, 0, 327681, 6, 0, 327682, 6, 0, 327683, 5, 0, 327684, 6, 0, 327685, 6, 0, 327686, 6, 0, 327687, 6, 0, 327688, 7, 0, 393216, 6, 0, 393217, 6, 0, 393218, 6, 0, 393219, 5, 0, 393220, 6, 0, 393221, 6, 0, 393222, 6, 0, 393223, 6, 0, 393224, 7, 0, 458752, 6, 0, 458753, 6, 0, 458754, 6, 0, 458755, 5, 0, 458756, 6, 0, 458757, 6, 0, 458758, 6, 0, 458759, 6, 0, 458760, 7, 0, 524288, 6, 0, 524289, 6, 0, 524290, 6, 0, 524291, 5, 0, 524292, 6, 0, 524293, 6, 0, 524294, 6, 0, 524295, 6, 0, 524296, 7, 0, 589824, 6, 0, 589825, 6, 0, 589826, 6, 0, 589827, 3, 0, 589828, 11, 0, 589829, 6, 0, 589830, 6, 0, 589831, 6, 0, 589832, 7, 0 )
+tile_data = PoolIntArray( 524288, 1, 0, 524290, 0, 0, 524292, 2, 0, 524296, 3, 0 )
 
 [node name="Player" parent="." instance=ExtResource( 3 )]
-position = Vector2( 225.263, 308.422 )
-scale = Vector2( 0.5, 0.5 )
-collision_layer = 3
+motion/sync_to_physics = false
+max_speed = 100
+fuel = 100
 
+[node name="Dead" type="Area2D" parent="."]
+input_pickable = true
+gravity_vec = Vector2( 0, 1 )
+gravity = 98.0
+linear_damp = 0.1
+angular_damp = 1.0
+audio_bus_override = false
+audio_bus_name = "Master"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Dead"]
+position = Vector2( 439.537, 682.109 )
+shape = SubResource( 1 )
+
+[connection signal="body_entered" from="Dead" to="Player" method="_on_Dead_body_entered"]
