@@ -18,4 +18,5 @@ func control(delta):
 		
 func _on_Dead_body_entered(body):
 	alive = false
-	queue_free()
+	#self.queue_free()
+	get_tree().change_scene("res://map/Map.tscn")
