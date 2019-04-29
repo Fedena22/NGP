@@ -20,4 +20,3 @@ func _physics_process(delta):
 	velocity.y += delta * GRAVITY
 	move_and_slide(velocity)
 	print(fuel)
-	

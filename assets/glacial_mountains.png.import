@@ -3,6 +3,9 @@
 importer="texture"
 type="StreamTexture"
 path="res://.import/glacial_mountains.png-c78f7fac269e64768d579c1aae221332.stex"
+metadata={
+"vram_texture": false
+}
 
 [deps]
 

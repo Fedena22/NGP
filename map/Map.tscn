@@ -6,7 +6,6 @@
 [ext_resource path="res://planes/Player.tscn" type="PackedScene" id=4]
 
 [sub_resource type="RectangleShape2D" id=1]
-
 extents = Vector2( 2081.59, 7.12549 )
 
 [node name="Map" type="Node"]
@@ -42,5 +41,4 @@ fuel = 100
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Dead"]
 position = Vector2( 2031.01, 710.893 )
 shape = SubResource( 1 )
-
 [connection signal="body_entered" from="Dead" to="Player" method="_on_Dead_body_entered"]
