@@ -34,32 +34,32 @@ jobs:
           name: Export win64 build
           command: |
               mkdir -p win64
-              ./godot --export win64 project.godot "win64/Clean Escape.exe"
+              ./godot --export win64 project.godot "win64/NGP.exe"
       - run:
           name: Upload win64 build
-          command: if [[ $(git log -1 --oneline) == *"[RELEASE]"* ]]; then ./butler push win64 ngp/clean-escape:win-64bit; fi
+          command: if [[ $(git log -1 --oneline) == *"[RELEASE]"* ]]; then ./butler push win64 kentaro22/NGP:win-64bit; fi
       - run:
           name: Export linux64 build
           command: |
               mkdir -p linux64
-              ./godot --export linux project.godot "linux64/clean-escape"
+              ./godot --export linux project.godot "linux64/NGP"
       - run:
           name: Upload linux64 build
-          command: if [[ $(git log -1 --oneline) == *"[RELEASE]"* ]]; then ./butler push linux64 ngp/clean-escape:linux-64bit; fi
+          command: if [[ $(git log -1 --oneline) == *"[RELEASE]"* ]]; then ./butler push linux64 kentaro22/NGP:linux-64bit; fi
 
       - run:
           name: Export mac build
           command: |
-              ./godot --export macOS project.godot "clean-escape-mac"
-              mv clean-escape-mac clean-escape-mac.zip
+              ./godot --export macOS project.godot "NGP-mac"
+              mv NGP-mac NGP-mac.zip
       - run:
           name: Upload mac build
-          command: if [[ $(git log -1 --oneline) == *"[RELEASE]"* ]]; then ./butler push clean-escape-mac.zip ngp/clean-escape:mac; fi
+          command: if [[ $(git log -1 --oneline) == *"[RELEASE]"* ]]; then ./butler push NGP-mac.zip kentaro22/NGP:mac; fi
       - run:
           name: Export Web build
           command: |
               ./godot --export web project.godot "web"
               mv web web.zip
       - run:
-          name: Upload Web build
-          command: if [[ $(git log -1 --oneline) == *"[RELEASE]"* ]]; then ./butler push web.zip ngp/clean-escape:web; fi
+          name: Upload mac build
+          command: if [[ $(git log -1 --oneline) == *"[RELEASE]"* ]]; then ./butler push web.zip kentaro22/NGP:web; fi
