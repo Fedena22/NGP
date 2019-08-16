@@ -61,5 +61,5 @@ jobs:
               ./godot --export web project.godot "web"
               mv web web.zip
       - run:
-          name: Upload mac build
+          name: Upload Web build
           command: if [[ $(git log -1 --oneline) == *"[RELEASE]"* ]]; then ./butler push web.zip ngp/clean-escape:web; fi
