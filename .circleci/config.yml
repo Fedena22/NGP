@@ -25,7 +25,41 @@ jobs:
               unzip Godot_v3.1-stable_export_templates.tpz -d ~/.local/share/godot/templates
               mv ~/.local/share/godot/templates/templates ~/.local/share/godot/templates/3.1.stable
       - run:
-          name: Export web build
+          name: Download butler
           command: |
-              mkdir -p web
-              ./godot --export web project.godot "win64/ngp.html"
+              wget -q -O butler.zip https://broth.itch.ovh/butler/linux-amd64/LATEST/archive/default
+              unzip butler.zip
+              chmod +x butler
+      - run:
+          name: Export win64 build
+          command: |
+              mkdir -p win64
+              ./godot --export win64 project.godot "win64/Clean Escape.exe"
+      - run:
+          name: Upload win64 build
+          command: if [[ $(git log -1 --oneline) == *"[RELEASE]"* ]]; then ./butler push win64 ngp/clean-escape:win-64bit; fi
+      - run:
+          name: Export linux64 build
+          command: |
+              mkdir -p linux64
+              ./godot --export linux project.godot "linux64/clean-escape"
+      - run:
+          name: Upload linux64 build
+          command: if [[ $(git log -1 --oneline) == *"[RELEASE]"* ]]; then ./butler push linux64 ngp/clean-escape:linux-64bit; fi
+
+      - run:
+          name: Export mac build
+          command: |
+              ./godot --export macOS project.godot "clean-escape-mac"
+              mv clean-escape-mac clean-escape-mac.zip
+      - run:
+          name: Upload mac build
+          command: if [[ $(git log -1 --oneline) == *"[RELEASE]"* ]]; then ./butler push clean-escape-mac.zip ngp/clean-escape:mac; fi
+      - run:
+          name: Export Web build
+          command: |
+              ./godot --export web project.godot "web"
+              mv web web.zip
+      - run:
+          name: Upload mac build
+          command: if [[ $(git log -1 --oneline) == *"[RELEASE]"* ]]; then ./butler push web.zip ngp/clean-escape:web; fi
