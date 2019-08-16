@@ -17,7 +17,7 @@ _global_script_class_icons={
 
 config/name="NewGamePlus"
 run/main_scene="res://map/Map.tscn"
-config/icon="res://icon.png"
+config/icon="res://P1030989.ico"
 
 [input]
 
